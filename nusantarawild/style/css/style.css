@@ -1,0 +1,2025 @@
+/**
+ * NUSANTARAWILD - MAIN STYLESHEET
+ * Semua CSS project (halaman publik + panel admin) digabung di sini.
+ * Sebelumnya CSS ini tersebar sebagai tag <style> inline & atribut style=""
+ * di banyak file PHP, sekarang dipindahkan ke satu file agar mudah dirawat.
+ *
+ * Struktur file ini:
+ *  1. Variabel warna & style dasar (:root, body, scrollbar, dst)
+ *  2. Style halaman publik (navbar, hero, kategori, destinasi, footer, dll)
+ *  3. Style panel admin yang DIPAKAI BERSAMA di banyak halaman (sidebar,
+ *     topbar, kartu form, tabel, dsb) - supaya tidak dobel-dobel
+ *  4. Style khusus tiap halaman admin (diberi komentar "Sumber asal: ...")
+ *  5. Class hasil ekstraksi dari atribut style="" inline yang nilainya statis
+ */
+
+:root {
+    --green-primary: #16a34a;
+    --green-dark: #166534;
+    --green-light: #dcfce7;
+    --green-mid: #22c55e;
+    --text-dark: #111827;
+    --text-mid: #374151;
+    --text-muted: #6b7280;
+    --bg-light: #f9fafb;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+    --shadow-md: 0 4px 20px rgba(0,0,0,.1);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,.15);
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --transition: all .3s ease;
+}
+
+* { box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); overflow-x: hidden; }
+h1,h2,h3,h4,h5 { font-family: 'Playfair Display', serif; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: var(--green-primary); border-radius: 3px; }
+
+/* ===== NAVBAR ===== */
+.navbar-main {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    padding: 12px 0;
+    transition: var(--transition);
+}
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--green-primary) !important;
+    text-decoration: none;
+}
+.nav-link {
+    color: var(--text-mid) !important;
+    font-weight: 500;
+    padding: 8px 16px !important;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--green-primary) !important;
+    background: var(--green-light);
+}
+.navbar-toggler { border: none; padding: 0; }
+.navbar-toggler:focus { box-shadow: none; }
+.btn-nav-outline {
+    border: 1.5px solid var(--green-primary);
+    color: var(--green-primary);
+    border-radius: var(--radius-sm);
+    padding: 6px 18px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+.btn-nav-outline:hover { background: var(--green-primary); color: white; }
+.btn-user {
+    background: var(--green-light);
+    border: none;
+    color: var(--green-dark);
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    padding: 6px 16px;
+}
+.btn-user:hover { background: var(--green-primary); color: white; }
+
+/* ===== RIWAYAT BOOKING BUTTON ===== */
+.btn-cart {
+    background: transparent;
+    border: 1.5px solid #e5e7eb;
+    color: var(--text-mid);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    transition: var(--transition);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-cart:hover {
+    background: var(--green-light);
+    border-color: var(--green-primary);
+    color: var(--green-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+}
+.btn-cart:active {
+    transform: translateY(0);
+}
+
+/* ===== BUTTONS ===== */
+.btn-green {
+    background: var(--green-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 24px;
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-green:hover { background: var(--green-dark); color: white; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(22,163,74,.3); }
+.btn-outline-green {
+    background: transparent;
+    color: var(--green-primary);
+    border: 1.5px solid var(--green-primary);
+    border-radius: var(--radius-sm);
+    padding: 9px 24px;
+    font-weight: 500;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-outline-green:hover { background: var(--green-primary); color: white; }
+
+/* ===== HERO ===== */
+.hero-section {
+    min-height: 100vh;
+    background-image: url("../../assets/images/bannerrr.png");
+    background-size: cover;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,.6) 0%, rgba(0,60,30,.5) 100%);
+}
+.hero-content { position: relative; z-index: 2; padding: 120px 0 60px; }
+.hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.3);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: .9rem;
+    margin-bottom: 24px;
+}
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 20px;
+}
+.hero-subtitle { font-size: 1.2rem; color: rgba(255,255,255,.85); max-width: 600px; margin: 0 auto 40px; }
+.hero-search { max-width: 600px; margin: 0 auto 50px; }
+.search-input { border-radius: var(--radius-sm) !important; padding: 14px 20px; border: none; font-size: 1rem; }
+.btn-cari {
+    background: var(--green-mid);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px 28px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+.btn-cari:hover { background: var(--green-dark); color: white; }
+.hero-stats { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
+.stat-item { text-align: center; }
+.stat-number { display: block; font-size: 2rem; font-weight: 700; color: white; font-family: 'Playfair Display', serif; }
+.stat-label { font-size: .85rem; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: 1px; }
+.stat-divider { width: 1px; background: rgba(255,255,255,.2); align-self: stretch; }
+.hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.6); font-size: 1.5rem; animation: bounce 2s infinite; z-index: 2; }
+@keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+/* ===== COOKIE ALERT ===== */
+.cookie-alert { border-radius: 0; border: none; font-weight: 500; }
+
+/* ===== SECTION ===== */
+.section-padding { padding: 80px 0; }
+.section-badge {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-primary);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+}
+.section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+.section-header { margin-bottom: 50px; }
+
+/* ===== KATEGORI CARDS ===== */
+.kategori-card {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1.5px solid transparent;
+}
+.kategori-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--green-primary); }
+.kategori-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 14px; }
+.kategori-nama { font-weight: 600; font-size: .9rem; color: var(--text-dark); }
+
+/* ===== DESTINASI CARDS ===== */
+.dest-card {
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,.06);
+}
+.dest-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.dest-img-wrap { position: relative; overflow: hidden; height: 220px; }
+.dest-img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.dest-card:hover .dest-img { transform: scale(1.08); }
+.dest-badge { position: absolute; top: 14px; left: 14px; padding: 4px 12px; border-radius: 50px; font-size: .75rem; font-weight: 600; }
+.badge-top { background: #fef3c7; color: #92400e; }
+.badge-hot { background: #fee2e2; color: #991b1b; }
+.dest-kategori { position: absolute; bottom: 14px; right: 14px; background: rgba(0,0,0,.65); color: white; padding: 3px 12px; border-radius: 50px; font-size: .75rem; backdrop-filter: blur(4px); }
+.dest-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.dest-title { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+.dest-lokasi { font-size: .85rem; color: var(--text-muted); margin-bottom: 10px; }
+.dest-desc { font-size: .9rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.dest-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.dest-rating { display: flex; align-items: center; font-size: .85rem; font-weight: 600; }
+.dest-harga { font-weight: 700; color: var(--green-primary); font-size: .9rem; }
+
+/* ===== WHY SECTION ===== */
+.why-section { background: linear-gradient(135deg, #0f2d1a 0%, #1a4a2e 100%); }
+.why-card { padding: 40px 20px; border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-md); transition: var(--transition); }
+.why-card:hover { background: rgba(255,255,255,.08); transform: translateY(-4px); }
+.why-icon { font-size: 2.5rem; color: var(--green-mid); margin-bottom: 16px; }
+.why-title { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 12px; }
+.why-desc { font-size: .9rem; color: rgba(255,255,255,.65); line-height: 1.6; margin: 0; }
+
+/* ===== CTA ===== */
+.cta-section { background: linear-gradient(135deg, var(--green-primary), var(--green-dark)); padding: 90px 0; }
+.cta-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 16px; }
+.cta-sub { font-size: 1.1rem; color: rgba(255,255,255,.85); margin-bottom: 40px; }
+.btn-cta-white { background: white; color: var(--green-dark); font-weight: 600; padding: 14px 32px; border-radius: var(--radius-sm); text-decoration: none; display: inline-flex; align-items: center; transition: var(--transition); }
+.btn-cta-white:hover { background: var(--green-light); color: var(--green-dark); }
+.btn-cta-outline { background: transparent; color: white; border: 2px solid white; font-weight: 600; padding: 12px 32px; border-radius: var(--radius-sm); text-decoration: none; display: inline-flex; align-items: center; transition: var(--transition); }
+.btn-cta-outline:hover { background: rgba(255,255,255,.15); color: white; }
+
+/* ===== FOOTER ===== */
+.footer-sosmed-link {
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    transition: opacity .2s;
+}
+/* Warna latar tiap tombol sosmed tetap inline (style="background:...")
+   karena diambil dinamis per baris data dari includes/footer.php */
+.footer { background: #0a1a0f; color: rgba(255,255,255,.7); padding: 70px 0 30px; }
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; display: flex; align-items: center; }
+.footer-desc { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.55); }
+.footer-col-title { color: white; font-weight: 700; margin-bottom: 18px; font-size: .95rem; text-transform: uppercase; letter-spacing: .5px; }
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .9rem; transition: var(--transition); }
+.footer-links a:hover { color: var(--green-mid); }
+.footer-hr { border-color: rgba(255,255,255,.1); margin: 40px 0 20px; }
+.footer-copy { font-size: .85rem; color: rgba(255,255,255,.4); }
+.footer-small-link { color: rgba(255,255,255,.4); text-decoration: none; font-size: .85rem; }
+.footer-small-link:hover { color: var(--green-mid); }
+.footer-sosmed { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: var(--transition); }
+.footer-sosmed:hover { background: var(--green-primary); color: white; }
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    display: none;
+}
+.scroll-top-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--green-primary);
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    font-size: 1.3rem;
+}
+.scroll-top-btn:hover {
+    background: var(--green-dark);
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header { background: center/cover no-repeat; min-height: 280px; display: flex; align-items: center; padding-top: 80px; position: relative; }
+.page-header-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,.65) 0%, rgba(0,50,20,.55) 100%); }
+.page-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; margin-bottom: 8px; }
+.page-sub { font-size: 1.1rem; color: rgba(255,255,255,.85); margin: 0; }
+
+/* ===== FILTER BAR ===== */
+.filter-bar { background: white; padding: 28px; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
+
+/* ===== DETAIL PAGE ===== */
+.detail-hero-img { height: 420px; object-fit: cover; }
+.thumb-img { height: 100px; object-fit: cover; cursor: pointer; transition: var(--transition); }
+.thumb-img:hover { opacity: .8; transform: scale(1.02); }
+.detail-info-card { background: white; border-radius: var(--radius-md); padding: 36px; box-shadow: var(--shadow-md); height: 100%; }
+.detail-desc { color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.info-item { display: flex; align-items: center; gap: 12px; background: var(--bg-light); padding: 14px; border-radius: var(--radius-sm); }
+.info-item i { font-size: 1.3rem; }
+.info-item small { display: block; font-size: .75rem; color: var(--text-muted); }
+.info-item strong { font-size: .9rem; }
+
+/* ===== AUTH PAGES ===== */
+.auth-page { background: var(--bg-light); min-height: 100vh; }
+.auth-container { display: flex; min-height: 100vh; }
+.auth-left {
+    flex: 0 0 45%;
+    background: url('../images/pemandangan2.jpg') center/cover no-repeat;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 50px;
+}
+.auth-left::before { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,40,20,.85) 0%, rgba(0,0,0,.3) 100%); }
+.auth-left.register-bg { background: url('../../image/bg-register.jpg') center/cover no-repeat; }
+.auth-left.login-bg { background: url('../../assets/images/pemandangan4.jpg') center/cover no-repeat; }
+.auth-left-content { position: relative; z-index: 1; color: white; }
+.auth-left h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 16px; }
+.auth-left p { color: rgba(255,255,255,.8); font-size: 1rem; line-height: 1.7; }
+.auth-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: white !important; text-decoration: none; display: flex; align-items: center; margin-bottom: 50px; }
+.auth-logo-mobile { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--green-primary); text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; }
+.auth-features { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+.auth-feature-item { font-size: .9rem; color: rgba(255,255,255,.85); }
+.auth-stats { display: flex; gap: 30px; margin-top: 30px; }
+.auth-stat { text-align: center; }
+.auth-stat span { display: block; font-size: 1.6rem; font-weight: 700; color: white; font-family: 'Playfair Display', serif; }
+.auth-stat small { color: rgba(255,255,255,.65); font-size: .8rem; }
+.auth-right { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; overflow-y: auto; }
+.auth-form-wrap { width: 100%; max-width: 460px; }
+.auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+.auth-sub { font-size: .95rem; margin-bottom: 30px; }
+.demo-account-box { border: 1.5px solid #e5e7eb; border-radius: var(--radius-sm); padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: var(--transition); }
+.demo-account-box:hover { border-color: var(--green-primary); background: var(--green-light); }
+.demo-account-box i { font-size: 1.5rem; color: var(--green-primary); }
+
+/* ===== BOOKING ===== */
+.booking-form-card, .booking-summary-card { background: white; border-radius: var(--radius-md); padding: 36px; box-shadow: var(--shadow-md); }
+.booking-success-card { background: white; border-radius: var(--radius-md); padding: 50px; box-shadow: var(--shadow-md); max-width: 600px; margin: 0 auto; }
+.success-icon { font-size: 5rem; color: var(--green-primary); }
+.booking-receipt { background: var(--bg-light); border-radius: var(--radius-md); overflow: hidden; text-align: left; }
+.receipt-header { background: var(--green-primary); color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+.receipt-logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; }
+.receipt-kode { font-family: monospace; font-size: 1.1rem; background: rgba(255,255,255,.2); padding: 4px 12px; border-radius: 6px; }
+.receipt-body { padding: 20px 24px; }
+.receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,.06); font-size: .9rem; }
+.receipt-row span { color: var(--text-muted); }
+.receipt-total { display: flex; justify-content: space-between; padding: 16px 0 8px; margin-top: 8px; font-size: 1.1rem; }
+.receipt-total strong { color: var(--green-primary); font-size: 1.3rem; }
+.metode-box { border: 1.5px solid #e5e7eb; border-radius: var(--radius-sm); padding: 10px; text-align: center; font-size: .85rem; cursor: pointer; transition: var(--transition); }
+.metode-box:hover { border-color: var(--green-primary); }
+.metode-box.active { border-color: var(--green-primary); background: var(--green-light); color: var(--green-dark); font-weight: 600; }
+
+/* ===== TENTANG PAGE ===== */
+.about-img-grid { position: relative; height: 420px; }
+.about-img-main { position: absolute; top: 0; left: 0; width: 75%; height: 100%; object-fit: cover; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); }
+.about-img-sub1 { position: absolute; bottom: 0; right: 0; width: 40%; height: 50%; object-fit: cover; border-radius: var(--radius-md); box-shadow: var(--shadow-md); border: 4px solid white; }
+.about-img-sub2 { position: absolute; top: 0; right: 0; width: 40%; height: 48%; object-fit: cover; border-radius: var(--radius-md); box-shadow: var(--shadow-md); border: 4px solid white; }
+.stats-section { background: var(--green-primary); padding: 60px 0; }
+.tentang-stat-card { padding: 20px; }
+.stat-number-big { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: white; line-height: 1; }
+.stat-label-big { color: rgba(255,255,255,.75); font-size: .9rem; margin-top: 6px; }
+.visi-card { background: var(--green-light); border-radius: var(--radius-md); padding: 28px; border-left: 4px solid var(--green-primary); }
+.misi-list { display: flex; flex-direction: column; gap: 20px; }
+.misi-item { display: flex; align-items: flex-start; gap: 16px; }
+.misi-nomor { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--green-light); line-height: 1; flex-shrink: 0; }
+.misi-text { color: var(--text-muted); line-height: 1.7; margin: 6px 0 0; }
+.team-card { background: white; border-radius: var(--radius-md); padding: 30px 20px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+.team-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.team-foto { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green-light); }
+.team-nama { font-weight: 700; }
+.team-jabatan { font-size: .85rem; margin-bottom: 10px; }
+.team-bio { font-size: .85rem; }
+
+/* ===== KONTAK PAGE ===== */
+.kontak-info-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.kontak-info-icon { width: 44px; height: 44px; background: var(--green-light); color: var(--green-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.kontak-form-card { background: white; border-radius: var(--radius-md); padding: 40px; box-shadow: var(--shadow-md); }
+.sosmed-btn { width: 42px; height: 42px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: var(--transition); font-size: 1.1rem; }
+.sosmed-btn:hover { opacity: .85; transform: scale(1.1); color: white; }
+.riwayat-pesan-item { background: var(--bg-light); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .auth-container { flex-direction: column; }
+    .auth-right { padding: 40px 20px; }
+    .about-img-grid { height: 280px; }
+}
+@media (max-width: 768px) {
+    .hero-stats { gap: 20px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .detail-hero-img { height: 260px; }
+}
+/* ===== COOKIE CONSENT POPUP ===== */
+.cookie-overlay-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.cookie-overlay-backdrop.show {
+    display: flex !important;
+}
+.cookie-popup {
+    background: #ffffff;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popupIn .35s ease;
+}
+@keyframes popupIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cp-head {
+    text-align: center;
+    padding: 32px 32px 0;
+}
+.cp-icon {
+    width: 60px;
+    height: 60px;
+    background: #dcfce7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 1.8rem;
+}
+.cp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0;
+}
+.cp-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0 0;
+}
+.cp-body {
+    padding: 20px 32px 8px;
+    font-size: 0.88rem;
+    color: #6b7280;
+    line-height: 1.65;
+}
+.cp-body p { margin-bottom: 10px; }
+.cp-body p:last-child { margin-bottom: 0; }
+.cp-body a {
+    color: #16a34a;
+    text-decoration: underline;
+}
+.cp-footer {
+    padding: 16px 32px 28px;
+}
+
+/* ===== PREFERENCE TOGGLE SECTION ===== */
+.pref-section {
+    display: none;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 4px 16px;
+    margin-bottom: 14px;
+    border: 1px solid #e5e7eb;
+}
+.pref-section.show { display: block; }
+
+.cp-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.cp-toggle-row:last-child { border-bottom: none; }
+.cp-toggle-info { flex: 1; }
+.cp-toggle-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+    display: block;
+    margin-bottom: 2px;
+}
+.cp-toggle-desc {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    display: block;
+}
+
+/* ===== TOGGLE SWITCH ===== */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+.toggle-track {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #d1d5db;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+.toggle-track::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    top: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle-switch input:checked + .toggle-track {
+    background-color: #16a34a;
+}
+.toggle-switch input:checked + .toggle-track::before {
+    transform: translateX(20px);
+}
+.toggle-switch input:disabled + .toggle-track {
+    background-color: #16a34a;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =====================================================
+   CSS TAMBAHAN (dipindahkan dari tag <style> di file PHP)
+   ===================================================== */
+
+/* --- Gaya bersama panel admin (dipakai berulang di banyak halaman admin:
+     dashboard, serta index/tambah/edit untuk users, booking, destinasi, kontak, staf) ---
+     PENTING: semua style di bawah ini di-scope pakai body.admin-page supaya
+     TIDAK bocor/bentrok ke halaman publik (navbar, hero, dst). Setiap file
+     admin/*.php wajib punya <body class="admin-page"> */
+
+body.admin-page,
+body.admin-page * {
+            font-family: 'Inter', sans-serif;
+        }
+
+body.admin-page {
+            background: #f0f2f5;
+            margin: 0;
+        }
+
+.section-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+        }
+
+/* ===== TABLE ===== */
+        .table-modern {
+            margin-bottom: 0;
+        }
+
+.table-modern tbody td {
+            padding: 14px 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f2f5;
+            font-size: 14px;
+            color: #333;
+        }
+
+.table-modern tbody tr:hover {
+            background: #f8fdf9;
+        }
+
+.table-modern tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+/* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+.animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+.delay-1 { animation-delay: 0.05s; }
+
+.delay-2 { animation-delay: 0.1s; }
+
+.delay-3 { animation-delay: 0.15s; }
+
+/* ===== MAIN CONTENT =====
+   Default = layout tengah TANPA sidebar (dipakai users/tambah, users/edit,
+   destinasi/tambah, destinasi/edit). Tambahkan class "with-sidebar" khusus
+   untuk halaman yang benar-benar punya .sidebar (staf/tambah, staf/edit). */
+        .main-content {
+            margin: 0 auto;
+            max-width: 1000px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+.main-content.with-sidebar {
+            margin-left: 250px;
+            margin-right: 0;
+            max-width: none;
+        }
+
+@media (max-width: 768px) {
+            .main-content.with-sidebar {
+                margin-left: 0;
+                padding: 16px;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+        }
+
+/* ===== ADMIN PAGE HEADER (card hijau) =====
+   Dipakai khusus di panel admin. Namanya sengaja dibedakan dari .page-header
+   publik (banner hero dengan gambar) supaya tidak saling menimpa. */
+        .admin-page-header {
+            background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+            border-radius: 16px;
+            padding: 28px 30px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+.admin-page-header::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+
+.admin-page-header h2 {
+            font-weight: 800;
+            font-size: 24px;
+            margin: 0;
+        }
+
+.admin-page-header p {
+            margin: 4px 0 0;
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+.breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+.breadcrumb-nav a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+.breadcrumb-nav a:hover {
+            opacity: 1;
+        }
+
+/* ===== FORM CARD ===== */
+        .form-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+.form-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+        }
+
+.form-card .card-header {
+            background: #fff;
+            border-bottom: 2px solid #f0f2f5;
+            padding: 20px 24px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a1a2e;
+        }
+
+.form-card .card-body {
+            padding: 28px 24px;
+        }
+
+/* ===== FORM ELEMENTS ===== */
+        .form-label-custom {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+.form-label-custom i {
+            color: #198754;
+            margin-right: 6px;
+        }
+
+.form-control-custom {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #fafbfc;
+        }
+
+.form-control-custom:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25,135,84,0.15);
+            background: #fff;
+        }
+
+.form-select-custom {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background-color: #fafbfc;
+        }
+
+.form-select-custom:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25,135,84,0.15);
+            background-color: #fff;
+        }
+
+/* ===== BUTTONS ===== */
+        .btn-simpan {
+            background: linear-gradient(135deg, #198754, #0f5132);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(25,135,84,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+.btn-simpan:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25,135,84,0.4);
+        }
+
+.btn-kembali {
+            background: #f0f2f5;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+.btn-kembali:hover {
+            color: #333;
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+/* ===== FORM HINT ===== */
+        .form-hint {
+            font-size: 12px;
+            color: #adb5bd;
+            margin-top: 4px;
+        }
+
+/* ===== SECTION DIVIDER ===== */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 28px 0 20px;
+        }
+
+.section-divider .line {
+            flex: 1;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+.section-divider span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #adb5bd;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+/* ===== SECTION CARD ===== */
+        .section-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+.table-modern thead th {
+            background: #f8f9fb;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 16px;
+            border: none;
+        }
+
+.table-modern tbody tr {
+            transition: all 0.2s;
+        }
+
+/* ===== BUTTONS ===== */
+        .btn-action {
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+.btn-edit {
+            background: rgba(255, 193, 7, 0.12);
+            color: #d4a106;
+        }
+
+.btn-edit:hover {
+            background: #ffc107;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+.btn-hapus {
+            background: rgba(220, 53, 69, 0.12);
+            color: #dc3545;
+        }
+
+.btn-hapus:hover {
+            background: #dc3545;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+.btn-tambah {
+            background: linear-gradient(135deg, #198754, #0f5132);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(25,135,84,0.3);
+        }
+
+.btn-tambah:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25,135,84,0.4);
+        }
+
+.btn-kembali {
+            background: transparent;
+            color: #198754;
+            border: 2px solid #198754;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+.btn-kembali:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #198754, #0f5132);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+        }
+
+/* ===== STAT BADGE ===== */
+        .stat-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+/* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+.empty-state i {
+            font-size: 64px;
+            color: #dee2e6;
+            margin-bottom: 16px;
+        }
+
+.empty-state h5 {
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+/* ===== BUTTONS ===== */
+        .btn-update {
+            background: linear-gradient(135deg, #ffc107, #d4a106);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+.btn-update:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+        }
+
+/* --- Sumber asal: index.php --- */
+/* Modern Cookie Popup Overlay (Dim Background) */
+        .cookie-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+/* Cookie Popup Card */
+        .cookie-popup-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+.cookie-popup-icon {
+            font-size: 45px;
+            color: #198754;
+            margin-bottom: 15px;
+        }
+
+.cookie-popup-card h4 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+.cookie-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+/* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+@keyframes scaleUp {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+.animate-fade {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+.animate-scale {
+            animation: scaleUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+/* Integrated Visit Badge Custom Styling */
+        .cookie-visit-badge .badge {
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 500;
+        }
+
+.bg-success-subtle {
+            background-color: #d1e7dd !important;
+        }
+
+.bg-info-subtle {
+            background-color: #cff4fc !important;
+        }
+
+/* --- Sumber asal: cetak_tiket.php ---
+   Di-scope pakai body.ticket-print supaya style halaman cetak tiket
+   (font kecil, warna, dsb) tidak bocor ke halaman lain di seluruh web. */
+body.ticket-print {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 30px;
+            font-size: 13px;
+            background-color: #fff;
+        }
+
+.ticket-print .ticket-box {
+            border: 2px dashed #198754;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #fafdfb;
+        }
+
+.ticket-print .header {
+            text-align: center;
+            border-bottom: 2px solid #198754;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+.ticket-print .header h1 {
+            font-size: 24px;
+            color: #198754;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+.ticket-print .header p {
+            margin: 0;
+            color: #666;
+            font-size: 12px;
+        }
+
+.ticket-print .ticket-code {
+            display: inline-block;
+            background-color: #198754;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+.ticket-print .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+.ticket-print .content-table td {
+            padding: 10px 5px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+.ticket-print .content-table td.label {
+            font-weight: bold;
+            color: #555;
+            width: 35%;
+        }
+
+.ticket-print .content-table td.value {
+            color: #222;
+        }
+
+.ticket-print .total-box {
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+.ticket-print .total-box h3 {
+            margin: 0;
+            color: #1b5e20;
+            font-size: 16px;
+        }
+
+.ticket-print .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+.ticket-print .badge-warning { background-color: #fff3cd; color: #856404; }
+
+.ticket-print .badge-primary { background-color: #cce5ff; color: #004085; }
+
+.ticket-print .badge-success { background-color: #d4edda; color: #155724; }
+
+.ticket-print .badge-danger { background-color: #f8d7da; color: #721c24; }
+
+.ticket-print .footer-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 11px;
+            color: #888;
+            line-height: 1.5;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+/* --- Sumber asal: admin/dashboard.php ---
+   PENTING: dashboard.php pakai kolom grid Bootstrap (col-md-3 col-lg-2) untuk
+   sidebar-nya, JADI TIDAK BOLEH pakai class ".sidebar" yang sama dengan
+   sidebar mengambang (position:fixed) di staf/tambah & staf/edit - makanya
+   dipakai nama class terpisah ".admin-sidebar-col" di sini. */
+.admin-sidebar-col{
+            min-height:100vh;
+            background:#198754;
+        }
+
+.admin-sidebar-col a{
+            color:white;
+            text-decoration:none;
+            display:block;
+            padding:12px 15px;
+            border-radius:8px;
+            margin-bottom:5px;
+        }
+
+.admin-sidebar-col a:hover{
+            background:rgba(255,255,255,.2);
+        }
+
+/* ===== STAT CARDS ===== */
+        .stat-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(.25,.8,.25,1);
+            position: relative;
+            color: #fff;
+        }
+
+.stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+.stat-card .card-body {
+            padding: 22px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+.stat-card .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+        }
+
+.stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+.stat-card .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+.stat-card::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            z-index: 0;
+        }
+
+.stat-card::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            z-index: 0;
+        }
+
+.bg-gradient-blue    { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+.bg-gradient-green   { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+
+.bg-gradient-orange  { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+.bg-gradient-teal    { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+
+.bg-gradient-purple  { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+
+/* ===== SECTION CARDS ===== */
+        .section-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+.section-card .card-header {
+            background: #fff;
+            border-bottom: 2px solid #f0f2f5;
+            padding: 16px 20px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a1a2e;
+        }
+
+.section-card .card-header i {
+            color: #198754;
+            margin-right: 8px;
+        }
+
+.table-modern thead th {
+            background: #f8f9fb;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            border: none;
+        }
+
+/* ===== HEADER ===== */
+        .dashboard-header {
+            background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+            border-radius: 16px;
+            padding: 28px 30px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+.dashboard-header::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+
+.dashboard-header h2 {
+            font-weight: 800;
+            font-size: 24px;
+            margin: 0;
+        }
+
+.dashboard-header p {
+            margin: 4px 0 0;
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+.dashboard-header .date-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+        }
+
+/* ===== BADGE STATUS ===== */
+        .badge-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+/* ===== VIEW ALL LINK ===== */
+        .view-all {
+            color: #198754;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+.view-all:hover {
+            color: #0f5132;
+        }
+
+.delay-4 { animation-delay: 0.2s; }
+
+.delay-5 { animation-delay: 0.25s; }
+
+.delay-6 { animation-delay: 0.3s; }
+
+.delay-7 { animation-delay: 0.35s; }
+
+/* --- Sumber asal: admin/dashboard.php --- */
+/* CSS Styles untuk Excel Column Chart */
+.chart-bar {
+    width: 60px;
+    margin: 0 auto;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-bar:hover {
+    transform: scaleX(1.08) translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    filter: brightness(1.1);
+}
+
+.chart-bar-shimmer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+}
+
+.chart-bar-link {
+    display: block;
+    text-decoration: none;
+}
+
+/* Hover style untuk container column */
+.chart-column:hover .status-value-label {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+}
+
+@media (max-width: 576px) {
+    .chart-bar {
+        width: 35px;
+    }
+}
+
+/* --- Sumber asal: admin/users/tambah.php --- */
+/* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+        }
+
+/* --- Sumber asal: admin/users/index.php --- */
+/* ===== SEARCH BAR ===== */
+        .search-box {
+            position: relative;
+        }
+
+.search-box input {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 10px 16px 10px 42px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #fff;
+        }
+
+.search-box input:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25,135,84,0.15);
+        }
+
+.search-box .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            font-size: 16px;
+        }
+
+/* ===== USER AVATAR ===== */
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+.user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+.user-info .name {
+            font-weight: 600;
+            color: #1a1a2e;
+            font-size: 14px;
+        }
+
+.user-info .email-sub {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+/* ===== BADGES ===== */
+        .badge-role {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+.badge-admin {
+            background: rgba(102, 126, 234, 0.12);
+            color: #667eea;
+        }
+
+.badge-user {
+            background: rgba(25, 135, 84, 0.12);
+            color: #198754;
+        }
+
+.empty-state p {
+            color: #adb5bd;
+            font-size: 14px;
+        }
+
+/* --- Sumber asal: admin/users/edit.php --- */
+/* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+        }
+
+/* --- Sumber asal: admin/booking/index.php --- */
+/* ===== STATUS BADGES ===== */
+        .badge-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+.status-menunggu {
+            background: rgba(255, 193, 7, 0.12);
+            color: #d4a106;
+        }
+
+.status-dikonfirmasi {
+            background: rgba(13, 110, 253, 0.12);
+            color: #0d6efd;
+        }
+
+.status-selesai {
+            background: rgba(25, 135, 84, 0.12);
+            color: #198754;
+        }
+
+.status-dibatalkan {
+            background: rgba(220, 53, 69, 0.12);
+            color: #dc3545;
+        }
+
+/* ===== BUTTONS ===== */
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+.btn-pdf {
+            background: rgba(220, 53, 69, 0.05);
+            color: #dc3545;
+            border: 2px solid rgba(220, 53, 69, 0.4);
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+.btn-pdf:hover {
+            background: #dc3545;
+            border-color: transparent;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+        }
+
+/* ===== FILTER TABS ===== */
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #e9ecef;
+            background: #fff;
+        }
+
+.filter-tab:hover {
+            color: #198754;
+            border-color: #198754;
+        }
+
+.filter-tab.active {
+            background: #198754;
+            color: #fff;
+            border-color: #198754;
+        }
+
+/* --- Sumber asal: admin/booking/export.php ---
+   Di-scope pakai body.export-print supaya tidak bocor. Sebelumnya .badge di
+   sini (font-size 9px, uppercase) menimpa SEMUA badge Bootstrap di seluruh
+   web (dashboard, riwayat booking, destinasi, dll). */
+body.export-print {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
+            font-size: 11px;
+            margin: 0;
+            padding: 0;
+        }
+
+.export-print .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #198754;
+            padding-bottom: 15px;
+        }
+
+.export-print .header h1 {
+            font-size: 20px;
+            color: #198754;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+
+.export-print .header p {
+            margin: 0;
+            color: #666;
+            font-size: 12px;
+        }
+
+.export-print .info-table {
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 11px;
+        }
+
+.export-print .info-table td {
+            padding: 3px 0;
+        }
+
+.export-print .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+.export-print .data-table th, .export-print .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+.export-print .data-table th {
+            background-color: #198754;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+.export-print .data-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+.export-print .badge {
+            padding: 3px 7px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+
+.export-print .badge-waiting { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+.export-print .badge-confirmed { background-color: #cce5ff; color: #004085; border: 1px solid #b8daff; }
+
+.export-print .badge-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+.export-print .badge-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+.export-print .footer {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 10px;
+            color: #777;
+        }
+
+/* --- Sumber asal: admin/kontak/tambah.php ---
+   .admin-kontak-card dulunya cuma ".card" polos yang override SEMUA card
+   Bootstrap di panel admin (termasuk stat card dashboard). Sekarang dikasih
+   nama sendiri supaya tidak bentrok (dan tidak sama dengan .kontak-form-card
+   milik halaman publik kontak.php). */
+.admin-kontak-card {
+            max-width: 750px;
+            margin: 40px auto;
+        }
+
+/* --- Sumber asal: admin/kontak/index.php --- */
+/* ===== BADGES KATEGORI ===== */
+        .badge-category {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+.cat-info {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+        }
+
+.cat-booking {
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+.cat-kemitraan {
+            background: rgba(255, 193, 7, 0.12);
+            color: #b8860b;
+        }
+
+.cat-saran {
+            background: rgba(0, 206, 209, 0.1);
+            color: #008b8b;
+        }
+
+.cat-default {
+            background: rgba(108, 117, 125, 0.1);
+            color: #6c757d;
+        }
+
+/* ===== BUTTONS ===== */
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+/* --- Sumber asal: admin/kontak/edit.php ---
+   (pakai .admin-kontak-card yang sama, lihat blok kontak/tambah.php di atas) --- */
+
+/* --- Sumber asal: admin/staf/tambah.php --- */
+/* ===== SIDEBAR ===== */
+        .sidebar {
+            min-height: 100vh;
+            background: #198754;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 100;
+            padding: 20px 15px;
+            overflow-y: auto;
+        }
+
+.sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+.sidebar a:hover,
+        .sidebar a.active {
+            background: rgba(255,255,255,.2);
+        }
+
+.sidebar a.active {
+            background: rgba(255,255,255,.25);
+            font-weight: 600;
+        }
+
+.sidebar .brand {
+            color: white;
+            font-weight: 800;
+            font-size: 20px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+
+/* NOTE: .main-content untuk halaman dengan sidebar (staf/tambah, staf/edit)
+   pakai modifier .with-sidebar - lihat definisi dasarnya di bagian awal
+   file (blok "Gaya bersama panel admin"). */
+
+/* --- Sumber asal: admin/staf/index.php --- */
+/* ===== AVATAR FOTO ===== */
+        .avatar-staf {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #198754;
+            box-shadow: 0 2px 8px rgba(25,135,84,0.15);
+        }
+
+/* ===== BADGES ===== */
+        .badge-position {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+            display: inline-block;
+        }
+
+/* --- Sumber asal: admin/staf/edit.php ---
+   (.sidebar & .main-content.with-sidebar sama seperti staf/tambah.php di atas,
+   tidak diulang lagi supaya tidak dobel) --- */
+
+/* ===== AVATAR DISPLAY ===== */
+        .foto-preview {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+/* --- Sumber asal: admin/destinasi/tambah.php --- */
+@media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+        }
+
+/* --- Sumber asal: admin/destinasi/index.php --- */
+/* ===== SEARCH BAR ===== */
+        .search-box {
+            position: relative;
+        }
+
+.search-box input {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 10px 16px 10px 42px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #fff;
+        }
+
+.search-box input:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 3px rgba(25,135,84,0.15);
+        }
+
+.search-box .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            font-size: 16px;
+        }
+
+/* ===== RATING STAR ===== */
+        .rating-star {
+            color: #ffc107;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+/* ===== BADGES ===== */
+        .badge-category {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+/* --- Sumber asal: admin/destinasi/edit.php --- */
+@media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+        }
+
+
+/* =====================================================
+   CLASS HASIL EKSTRAKSI dari atribut style="..." inline
+   (yang nilainya statis / tidak tergantung data PHP)
+   ===================================================== */
+
+.cs-820dbe { background-image: url('image/bg-register.jpg'); }
+.cs-6541cf { background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=80'); }
+.cs-10aa0f { top:90px; }
+.cs-cfdaba { height:180px;object-fit:cover; }
+.cs-8597b1 { background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1400&q=80'); }
+.cs-0c30f1 { background-image: url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=1400&q=80'); }
+.cs-ff93da { color: #666; font-weight: bold; }
+.cs-e21515 { font-size:18px; }
+.cs-a5d2ba { font-weight:600; }
+.cs-665ae2 { border-bottom: 1px solid #f0f2f5 !important; }
+.cs-076f9e { width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#198754,#38ef7d);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px; }
+.cs-ad5ca1 { min-width:0; }
+.cs-6c3ca2 { font-size:14px; }
+.cs-643a7c { font-size:11px; }
+.cs-d25fb4 { font-size:12px;color:#6c757d;font-weight:500; }
+.cs-e6a0f9 { font-size:13px;color:#555;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.cs-103e50 { height: 320px; position: relative; }
+.cs-81f8e1 { height: 250px; bottom: 40px; pointer-events: none; z-index: 1; }
+.cs-5d7659 { font-size: 10px; }
+.cs-217a90 { width: 20%; z-index: 2; }
+.cs-515f07 { font-size: 13px; font-weight: 600; }
+.cs-9baaad { color: #198754; }
+.cs-775f67 { min-width: 300px; }
+.cs-aa3f0a { color: #adb5bd; font-size: 13px; }
+.cs-00c66c { color: #ffc107; }
+.cs-0c9d36 { font-family: monospace; font-size: 13px; }
+.cs-324071 { font-size: 12px; max-width: 180px; }
+.cs-345895 { font-size: 12px; }
+.cs-766745 { font-size: 13px; }
+.cs-499df8 { font-size: 15px; }
+.cs-91679c { font-size: 13px; max-width: 320px; white-space: normal; word-break: break-word; }
+.cs-6ec708 { font-size: 11px; }
+.cs-8e6a45 { font-size: 13px; max-width: 250px; white-space: normal; word-break: break-word; }
+.cs-d65ed9 { object-fit: cover; border-radius: 10px; border: 1px solid #e9ecef; }
+.cs-117bb0 { width: 80px; height: 60px; border-radius: 10px; border: 1px dashed #adb5bd; }
+.cs-af18ea { font-size: 20px; }
+.cs-22b7e0 { font-size: 12px; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-c7d726 { max-width: 250px; border-radius: 12px; border: 2px solid #e9ecef; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
